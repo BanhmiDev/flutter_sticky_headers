@@ -49,7 +49,11 @@ class RenderStickyHeader extends RenderBox
     _scrollPosition = newValue;
     markNeedsLayout();
     if (attached) {
-      oldValue.removeListener(markNeedsLayout);
+      try {
+        oldValue.removeListener(markNeedsLayout);
+      } catch (ex) {
+        // nothing, oldValue could be already disposed, but it is safe to continue.
+      }
       newValue.addListener(markNeedsLayout);
     }
   }
